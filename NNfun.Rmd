@@ -1,0 +1,57 @@
+---
+title: "Insurance Claim Frequency"
+author: "Ragnar"
+date: '2022-03-24'
+output: html_document
+---
+
+
+
+
+Although Poisson or negative binomial regression are mostly used in claim frequency estimation we will start by usin a binomial regression.
+
+We assume that the repsonse is a bernoulli
+
+$$ P(Y = y) = \pi^y (1-\pi)^{1-\pi}$$
+
+
+In a logit regression, the canonical link function is given by a logit function
+
+
+$$ g(\pi) = \log \Big(\frac{\pi}{1-\pi} \Big) = x^t\beta$$
+
+which is same as saying that the probability is given by a sigmoid function
+
+$$\pi = \frac{1}{1+\exp \big(-x^T\beta \big)} = \sigma(x^T\beta)$$
+
+
+
+Given a samlpe (x_i, y_i)_i^n, the log-likelihood is:
+
+$$l(\beta) = \sum_i \Big(y_i\log(\pi_i) +(1-y_i)\log(1-\pi_i) \Big)  $$
+
+or 
+$$l(\beta) = \sum_i \Big(y_i\log(\sigma(x_i^T \beta)) +(1-y_i)\log(1-\sigma(x_i^T \beta)) \Big)  $$
+
+
+The $l$ is differentible so it is possible to train the model by some gradient descent methods. Once a model has been fit we can assess the goodness-of-fit of a model is to compare its log-likelihood with that of a saturated model. The relevant test statistic, called the deviance, is defined by:
+
+$$D = 2 \Big(l(\beta_{max}) - l(\hat{\beta}) \Big) $$
+
+where $\beta_{max}$ is obtained by having one parameter for each data point, resulting in $\hat{\pi}_i = y_i$ and a perfect fit. $\hat{\beta}$ are the estimate parameters of our model.
+
+
+The idead of Neural networks is to estimate functions $f:x \mapsto y$ by using hidden layers. If there are $K$ layers then we define the $k$ layer function $f^{(k)}: R^{q_{k-1}} \maptstoR^{q_{k}}$ using $f^{(k)}(z^{(k-1)}) = \phi_k(Wz^{(k-1)})$ where $W$ is a matrix, $\q_k$ is the dimension of hidden layer $k$ and $\phi_k$ is called an activation function. Note that $f^{(k)}$ returns a vector. We can also write this as
+
+$$ f^{(k)}: z^{} $$
+
+
+
+```{r}
+mtpl <- read.csv("freMTPL2freq.csv")
+```
+
+
+
+
+
